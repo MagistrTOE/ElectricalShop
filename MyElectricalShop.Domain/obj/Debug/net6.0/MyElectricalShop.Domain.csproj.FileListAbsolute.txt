@@ -1,0 +1,12 @@
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\bin\Debug\net6.0\MyElectricalShop.Domain.deps.json
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\bin\Debug\net6.0\MyElectricalShop.Domain.dll
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\bin\Debug\net6.0\MyElectricalShop.Domain.pdb
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.AssemblyInfoInputs.cache
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.AssemblyInfo.cs
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.ImplicitNamespaceImports.cs
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.csproj.CoreCompileInputs.cache
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.dll
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\ref\MyElectricalShop.Domain.dll
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\obj\Debug\net6.0\MyElectricalShop.Domain.pdb
+C:\Users\tchyo\source\repos\MyElectricalShop\MyElectricalShop.Domain\bin\Debug\net6.0\ref\MyElectricalShop.Domain.dll
