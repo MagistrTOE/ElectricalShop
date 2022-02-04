@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MyElectricalShop.Infrastructure.Migrations
+namespace MyElectricalShop.Infrastructure.Data.Migrations
 {
-    public partial class MyMigration : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
