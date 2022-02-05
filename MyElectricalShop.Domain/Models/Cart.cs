@@ -3,6 +3,6 @@
     public class Cart
     {
         public Guid Id { get; set; }
-        public List<CartLine> CartLines { get; set; }
+        public IEnumerable<CartLine> CartLines { get; set; }
     }
 }
