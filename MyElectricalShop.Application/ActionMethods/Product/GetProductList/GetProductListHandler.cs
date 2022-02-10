@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using MediatR;
-using AutoMapper;
 using MyElectricalShop.Domain.Interfaces;
 
 namespace MyElectricalShop.Application.ActionMethods.Product.GetProductList
 {
-    public class GetProductListHandler : IRequestHandler<GetProductListRequest,List<ProductResponse>>
+    public class GetProductListHandler : IRequestHandler<GetProductListRequest, List<ProductResponse>>
     {
         private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
@@ -23,7 +18,7 @@ namespace MyElectricalShop.Application.ActionMethods.Product.GetProductList
         public async Task<List<ProductResponse>> Handle(GetProductListRequest request, CancellationToken cancellationToken)
         {
             var productsList = await _productRepository.GetAllProducts();
-            
+
             return _mapper.Map<List<ProductResponse>>(productsList);
         }
     }

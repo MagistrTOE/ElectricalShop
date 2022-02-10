@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
-using MyElectricalShop.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using MyElectricalShop.Domain.Interfaces;
+using MyElectricalShop.Domain.Models;
 
 namespace MyElectricalShop.Infrastructure.Repositories
 {
-    public class ProductRepository:Domain.Interfaces.IProductRepository
+    public class ProductRepository : IProductRepository
     {
-        protected MyElectricalShopContext context;
-        public ProductRepository(MyElectricalShopContext ctx)
+        protected MyElectricalShopContext _context;
+        protected DbSet<Product> _entitySet;
+        public ProductRepository(MyElectricalShopContext context)
         {
-            context = ctx;
+            _context = context;
+            _entitySet = context.Set<Product>();
         }
-
-        public Task<List<Domain.Models.Product>> GetAllProducts()
+        public Task<List<Product>> GetAllProducts()
         {
-            return context.Products.ToListAsync();
+            return _context.Products.ToListAsync();
+        }
+        public async Task AddProduct(Product product)
+        {
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿namespace MyElectricalShop.Domain.Models
+﻿using MediatR;
+
+namespace MyElectricalShop.Application.ActionMethods.Product.Create
 {
-    public class Product
+    public class CreateProductRequest : IRequest<CreatedProductResponse>
     {
-        public Guid Id { get; set; }
         public string Category { get; set; }
         public string ProductionCompany { get; set; }
         public string Name { get; set; }

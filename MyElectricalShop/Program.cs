@@ -1,19 +1,12 @@
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using MyElectricalShop.Infrastructure.Data;
-using MyElectricalShop.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using MediatR;
-using Microsoft.Extensions.DependencyModel;
-using System.Reflection;
-using System.Linq;
-using MyElectricalShop.Domain.Interfaces;
-using MyElectricalShop.Infrastructure.Repositories;
 using AutoMapper;
-
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyModel;
+using MyElectricalShop.Domain.Interfaces;
+using MyElectricalShop.Infrastructure;
+using MyElectricalShop.Infrastructure.Data;
+using MyElectricalShop.Infrastructure.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
