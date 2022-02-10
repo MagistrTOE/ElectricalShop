@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using MyElectricalShop.Domain.Interfaces;
 using MyElectricalShop.Domain.Models;
 
@@ -23,11 +17,10 @@ namespace MyElectricalShop.Infrastructure.Repositories
         {
             return _context.Products.ToListAsync();
         }
-        public async Task<Product> AddProduct(Product product)
+        public async Task AddProduct(Product product)
         {
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
-            return product;
         }
     }
 }

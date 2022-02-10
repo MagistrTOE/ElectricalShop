@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace MyElectricalShop.Application.ActionMethods.Product.AddProduct
+namespace MyElectricalShop.Application.ActionMethods.Product.Create
 {
-    public class AddProductRequest : IRequest<AddProductResponse>
+    public class CreateProductRequest : IRequest<CreatedProductResponse>
     {
         public string Category { get; set; }
         public string ProductionCompany { get; set; }

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using MyElectricalShop.Application.ActionMethods.Product.Create;
 using MyElectricalShop.Application.ActionMethods.Product.GetProductList;
 using Products = MyElectricalShop.Domain.Models.Product;
 
 namespace MyElectricalShop.Application.ActionMethods.Product
 {
-    public class ProductMapper:Profile
+    public class ProductMapper : Profile
     {
         public ProductMapper()
         {
             CreateMap<Products, ProductResponse>();
+            CreateMap<CreateProductRequest, Products>();
+            CreateMap<Products, CreatedProductResponse>();
         }
-    
     }
 }

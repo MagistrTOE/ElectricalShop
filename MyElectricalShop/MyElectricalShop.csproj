@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,5 +22,7 @@
     <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Infrastructure\MyElectricalShop.Infrastructure.csproj" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

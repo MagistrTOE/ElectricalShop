@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MyElectricalShop.Application.ActionMethods.Product.GetProductList;
-using MyElectricalShop.Application.ActionMethods.Product.AddProduct;
+using MyElectricalShop.Application.ActionMethods.Product.Create;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace MyElectricalShop.Controllers;
 
@@ -21,8 +23,8 @@ public class ProductController : Controller
         return await _mediator.Send(new GetProductListRequest());
     }
 
-    [HttpPost("Create product")]
-    public async Task<AddProductResponse> CreateProduct([FromBody] AddProductRequest request)
+    [HttpPost("create")]
+    public async Task<CreatedProductResponse> CreateProduct([FromBody] CreateProductRequest request)
     {
         return await _mediator.Send(request);
     }
