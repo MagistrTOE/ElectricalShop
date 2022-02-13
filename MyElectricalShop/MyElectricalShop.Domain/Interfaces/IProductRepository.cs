@@ -4,7 +4,7 @@ namespace MyElectricalShop.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetAllProducts();
-        Task AddProduct(Product product);
+        Task<List<Product>> GetAll();
+        Task Add(Product product);
     }
 }

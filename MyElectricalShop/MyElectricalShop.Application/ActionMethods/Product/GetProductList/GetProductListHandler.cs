@@ -17,7 +17,7 @@ namespace MyElectricalShop.Application.ActionMethods.Product.GetProductList
 
         public async Task<List<ProductResponse>> Handle(GetProductListRequest request, CancellationToken cancellationToken)
         {
-            var productsList = await _productRepository.GetAllProducts();
+            var productsList = await _productRepository.GetAll();
 
             return _mapper.Map<List<ProductResponse>>(productsList);
         }

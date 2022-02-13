@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Microsoft.EntityFrameworkCore;
 namespace Data.EntityFrameworkCore
 {
-    internal class RepositoryGeneric
+    public class RepositoryGeneric<TEntity>
+        where TEntity : class
     {
+        protected DbContext _context;
+        protected DbSet<TEntity> _entitySet;
+
+        protected RepositoryGeneric(DbContext context)
+        {
+            _context = context;
+            _entitySet = context.Set<TEntity>();
+        }
+
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Add(TEntity entity)
+        {
+            await _entitySet.AddAsync(entity);
+            await Save();
+        }
+
+        public async Task<List<TEntity>> GetAll()
+        {
+            return await _entitySet.ToListAsync();
+        }
     }
 }
