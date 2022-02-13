@@ -3,11 +3,14 @@
     public class Product
     {
         public Guid Id { get; set; }
-        public string Category { get; set; }
-        public string ProductionCompany { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
         public string Name { get; set; }
         public double Power { get; set; }
-        public ushort Voltage { get; set; }
+        public int VoltageLevelId { get; set; }
+        public VoltageLevel VoltageLevel { get; set; }
         public decimal Price { get; set; }
     }
 }

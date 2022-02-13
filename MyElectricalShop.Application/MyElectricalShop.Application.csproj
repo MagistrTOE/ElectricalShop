@@ -14,6 +14,8 @@
   <ItemGroup>
     <Folder Include="ActionMethods\Cart\" />
     <Folder Include="ActionMethods\Order\" />
+    <Folder Include="ActionMethods\Company\" />
+    <Folder Include="ActionMethods\VoltageLevel\" />
   </ItemGroup>
 
   <ItemGroup>
