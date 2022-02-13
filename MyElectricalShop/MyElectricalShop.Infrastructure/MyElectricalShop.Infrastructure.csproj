@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlackCase\Data.EntityFrameworkCore\Data.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
   </ItemGroup>
 
