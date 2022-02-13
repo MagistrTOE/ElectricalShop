@@ -19,7 +19,7 @@ namespace MyElectricalShop.Application.ActionMethods.Product.Create
         public async Task<CreatedProductResponse> Handle(CreateProductRequest request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<ProductEntity>(request);
-            await _productRepository.AddProduct(product);
+            await _productRepository.Add(product);
 
             return _mapper.Map<CreatedProductResponse>(product);
         }
