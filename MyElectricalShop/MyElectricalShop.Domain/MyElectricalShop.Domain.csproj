@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\Data.csproj" />
+    <ProjectReference Include="..\..\BlackCase\Data\Data.csproj" />
   </ItemGroup>
 
 </Project>
