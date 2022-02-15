@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyModel;
 using MyElectricalShop.Domain.Interfaces;
 using MyElectricalShop.Infrastructure;
 using MyElectricalShop.Infrastructure.Data;
+using MyElectricalShop.Infrastructure.Data.Repositories;
 using MyElectricalShop.Infrastructure.Repositories;
 using System.Reflection;
 
@@ -24,6 +25,8 @@ var host = builder.Host
 // Add services to the container.
 builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+builder.Services.AddTransient<IVoltageLevelRepository, VoltageLevelRepository>();
 
 
 

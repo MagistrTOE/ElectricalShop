@@ -7,15 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
-    <ProjectReference Include="..\MyElectricalShop.Infrastructure\MyElectricalShop.Infrastructure.csproj" />
+    <Compile Remove="ActionMethods\Cart\**" />
+    <Compile Remove="ActionMethods\Order\**" />
+    <EmbeddedResource Remove="ActionMethods\Cart\**" />
+    <EmbeddedResource Remove="ActionMethods\Order\**" />
+    <None Remove="ActionMethods\Cart\**" />
+    <None Remove="ActionMethods\Order\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ActionMethods\Cart\" />
-    <Folder Include="ActionMethods\Order\" />
-    <Folder Include="ActionMethods\Company\" />
-    <Folder Include="ActionMethods\VoltageLevel\" />
+    <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
+    <ProjectReference Include="..\MyElectricalShop.Infrastructure\MyElectricalShop.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
