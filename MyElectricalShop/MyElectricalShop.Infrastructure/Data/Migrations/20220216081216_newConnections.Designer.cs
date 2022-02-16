@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyElectricalShop.Infrastructure;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyElectricalShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MyElectricalShopContext))]
-    partial class MyElectricalShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220216081216_newConnections")]
+    partial class newConnections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +38,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Category", (string)null);
 
                     b.HasData(
                         new
@@ -69,7 +71,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("MyElectricalShop.Domain.Models.Product", b =>
@@ -105,7 +107,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
                     b.HasIndex("VoltageLevelId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("MyElectricalShop.Domain.Models.VoltageLevel", b =>
@@ -122,7 +124,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VoltageLevels", (string)null);
+                    b.ToTable("VoltageLevel");
                 });
 
             modelBuilder.Entity("MyElectricalShop.Domain.Models.Product", b =>

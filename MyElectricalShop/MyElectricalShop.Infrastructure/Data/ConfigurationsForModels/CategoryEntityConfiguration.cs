@@ -9,9 +9,12 @@ namespace MyElectricalShop.Infrastructure.Data.ConfigurationsForModels
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder
-                .HasKey(x => x.Id);
+                .ToTable("Categories");
+
             builder
-                .ToTable("Category")
+                .HasKey(x => x.Id);
+           
+            builder
                 .HasData(DefaultCategory());
         }
 

@@ -14,6 +14,9 @@ namespace MyElectricalShop.Infrastructure.Data.ConfigurationsForModels
         public void Configure(EntityTypeBuilder<VoltageLevel> builder)
         {
             builder
+                .ToTable("VoltageLevels");
+
+            builder
                 .HasKey(x => x.Id);
         }
     }

@@ -14,9 +14,9 @@ public class ProductController : Controller
     {
         _mediator = mediator;
     }
-    [Route("getListProduct")]
-    [HttpGet]
-    public async Task<List<ProductResponse>> GetListProduct()
+
+    [HttpGet("getListProduct")]
+    public async Task<List<ProductResponse>> GetListProductsWithFullInfo()
     {
         return await _mediator.Send(new GetProductListRequest());
     }
