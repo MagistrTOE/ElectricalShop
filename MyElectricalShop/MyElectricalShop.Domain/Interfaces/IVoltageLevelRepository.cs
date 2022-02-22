@@ -3,7 +3,7 @@ using Data;
 
 namespace MyElectricalShop.Domain.Interfaces
 {
-    public interface IVoltageLevelRepository : IRepositoryGeneric<VoltageLevel>
+    public interface IVoltageLevelRepository : IRepositoryGeneric<VoltageLevel, int>
     {
     }
 }

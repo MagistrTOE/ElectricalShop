@@ -3,7 +3,7 @@ using Data;
 
 namespace MyElectricalShop.Domain.Interfaces
 {
-    public interface ICompanyRepository : IRepositoryGeneric<Company>
+    public interface ICompanyRepository : IRepositoryGeneric<Company, int>
     {
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyElectricalShop.Application.ActionMethods.Company.Create;
 using MyElectricalShop.Application.ActionMethods.Company.GetCompanyList;
+using MyElectricalShop.Application.ActionMethods.Company.Delete;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
@@ -26,6 +27,12 @@ namespace MyElectricalShop.Web.Api.Controllers
         public async Task<List<CompanyResponse>> GetListCompany()
         {
             return await _mediator.Send(new GetCompanyListRequest());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<DeletedCompanyResponse> DeleteCompany([FromRoute] int id)
+        {
+            return await _mediator.Send(new DeleteCompanyRequest(id));
         }
     }
 }

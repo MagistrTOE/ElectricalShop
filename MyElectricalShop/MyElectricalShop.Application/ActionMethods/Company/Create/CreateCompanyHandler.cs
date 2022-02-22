@@ -20,6 +20,7 @@ namespace MyElectricalShop.Application.ActionMethods.Company.Create
         {
             var company = _mapper.Map<CompanyEntity>(request);
             await _companyRepository.Add(company);
+            
             return _mapper.Map<CreatedCompanyResponse>(company);
         }
     }
