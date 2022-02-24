@@ -1,10 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MyElectricalShop.Application.ActionMethods.Product.Create;
-using MyElectricalShop.Application.ActionMethods.Product.GetProductList;
+using MyElectricalShop.Application.ActionMethods.Products.Create;
+using MyElectricalShop.Application.ActionMethods.Products.GetProductList;
+using MyElectricalShop.Application.ActionMethods.Products.GetProductById;
+using MyElectricalShop.Application.ActionMethods.Products.Delete;
 
 namespace MyElectricalShop.Controllers;
 
+[Route("products")]
 [ApiController]
 public class ProductController : Controller
 {
@@ -15,15 +18,29 @@ public class ProductController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("getListProduct")]
+    [HttpGet("list")]
     public async Task<List<ProductResponse>> GetListProductsWithFullInfo()
     {
         return await _mediator.Send(new GetProductListRequest());
     }
 
-    [HttpPost("createProduct")]
+    [HttpPost]
     public async Task<CreatedProductResponse> CreateProduct([FromBody] CreateProductRequest request)
     {
         return await _mediator.Send(request);
+    }
+
+    [HttpGet("{id:Guid}")]
+    public async Task<ProductResponse> GetProductById(Guid id)
+    {
+        return await _mediator.Send(new GetProductByIdRequest(id));
+    }
+
+    [HttpDelete("{id:Guid}")]
+    public async Task<IActionResult> DeleteProduct(Guid id)
+    {
+        await _mediator.Send(new DeleteProductRequest(id));
+
+        return NoContent();
     }
 }

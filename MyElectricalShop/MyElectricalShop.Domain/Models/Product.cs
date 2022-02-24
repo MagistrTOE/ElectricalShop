@@ -1,8 +1,9 @@
-﻿namespace MyElectricalShop.Domain.Models
+﻿using Data.Entities;
+
+namespace MyElectricalShop.Domain.Models
 {
-    public class Product
+    public class Product : ModelBase<Guid>
     {
-        public Guid Id { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public int CompanyId { get; set; }

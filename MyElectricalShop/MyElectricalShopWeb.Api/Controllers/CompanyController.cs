@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MyElectricalShop.Application.ActionMethods.Company.Create;
-using MyElectricalShop.Application.ActionMethods.Company.GetCompanyList;
+using MyElectricalShop.Application.ActionMethods.Companies.Create;
+using MyElectricalShop.Application.ActionMethods.Companies.GetList;
+using MyElectricalShop.Application.ActionMethods.Companies.Delete;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
+    [Route("Companies")]
     [ApiController]
     public class CompanyController : Controller
     {
@@ -15,17 +17,24 @@ namespace MyElectricalShop.Web.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("AddCompany")]
+        [HttpPost]
         public async Task<CreatedCompanyResponse> AddCompany([FromBody] CreateCompanyRequest request)
         {
             return await _mediator.Send(request);
         }
 
-        [Route("getListCompany")]
-        [HttpGet]
-        public async Task<List<CompanyResponse>> GetListCompany()
+        [HttpGet("list")]
+        public async Task<List<CompanyResponseItem>> GetListCompany()
         {
             return await _mediator.Send(new GetCompanyListRequest());
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteCompany(int id)
+        {
+            await _mediator.Send(new DeleteCompanyRequest(id));
+
+            return NoContent();
         }
     }
 }

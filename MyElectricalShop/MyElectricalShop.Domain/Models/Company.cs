@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data.Entities;
 
 namespace MyElectricalShop.Domain.Models
 {
-    public class Company
+    public class Company : ModelBase<int>
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
     }
