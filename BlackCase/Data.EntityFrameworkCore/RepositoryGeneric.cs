@@ -35,8 +35,10 @@ namespace Data.EntityFrameworkCore
         {
             var entity = _entitySet
                 .AsQueryable()
-                .Where(x => x.Id.Equals(id))
-                .IncludeEntities(property);
+                .Where(x => x.Id.Equals(id));
+
+            if(property?.Any() ?? false)
+                entity = property.Aggregate(entity, (currentProperty, nextProperty) => currentProperty.Include(nextProperty));
 
             return await entity.SingleOrDefaultAsync();
 
