@@ -7,7 +7,8 @@ namespace MyElectricalShop.Application.ActionMethods.VoltageLevels.Create
 {
     public class CreateVoltageLevelRequest : IRequest<CreatedVoltageLevelResponse>
     {
-        public string Level { get; set; }
+        public int MinLevel { get; set; }
+        public int MaxLevel { get; set; }
     }
 
     public class CreateVoltageLevelHandler : IRequestHandler<CreateVoltageLevelRequest, CreatedVoltageLevelResponse>

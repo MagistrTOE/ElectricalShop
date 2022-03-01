@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Text.RegularExpressions;
 
 namespace MyElectricalShop.Application.ActionMethods.VoltageLevels.Create
 {
@@ -7,17 +6,13 @@ namespace MyElectricalShop.Application.ActionMethods.VoltageLevels.Create
     {
         public CreateVoltageLevelValidator()
         {
-            RuleFor(x => x.Level)
-                .NotEmpty()
-                .WithMessage("Укажите диапазон напряжения");
+            RuleFor(x => x.MinLevel)
+                .Must(x => x >= 200 && x <= 11000)
+                .WithMessage("Укажите значение минимального напряжения от 200 В до 11000 В");
 
-            RuleFor(x => x.Level)
-                .Matches(@"[0-9]{3}-[0-9]{3}")
-                .WithMessage("Формат вводимых данных: minValue - maxValue");
+            RuleFor(x => x.MaxLevel)
+                .Must(x => x >= 230 && x <= 11000)
+                .WithMessage("Укажите значение максимального напряжения от 230 до 11000 В");
         }
-
-
     }
-
-
 }
