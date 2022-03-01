@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Data.Entities;
+using Core.Exceptions;
 
 namespace Data.EntityFrameworkCore
 {
@@ -33,15 +34,15 @@ namespace Data.EntityFrameworkCore
 
         public async Task<TEntity> GetById(TKey id, IEnumerable<string> property = null)
         {
-            var entity = _entitySet
+
+             var entity = _entitySet
                 .AsQueryable()
                 .Where(x => x.Id.Equals(id));
 
-            if(property?.Any() ?? false)
-                entity = property.Aggregate(entity, (currentProperty, nextProperty) => currentProperty.Include(nextProperty));
+             if (property?.Any() ?? false)
+                 entity = property.Aggregate(entity, (currentProperty, nextProperty) => currentProperty.Include(nextProperty));
 
-            return await entity.SingleOrDefaultAsync();
-
+             return await entity.SingleOrDefaultAsync();
         }
 
         public Task Delete(TEntity entity)

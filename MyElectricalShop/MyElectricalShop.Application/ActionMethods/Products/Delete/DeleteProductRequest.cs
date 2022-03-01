@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MyElectricalShop.Domain.Interfaces;
+using Core.Exceptions;
 
 namespace MyElectricalShop.Application.ActionMethods.Products.Delete
 {
@@ -25,6 +26,9 @@ namespace MyElectricalShop.Application.ActionMethods.Products.Delete
         public async Task<Unit> Handle(DeleteProductRequest request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetById(request.Id);
+            if (product == null)
+                throw new ArgumentNotFoundException($"Сущность с заданным Id: {request.Id} не найдена.");
+
             await _productRepository.Delete(product);
 
             return Unit.Value;

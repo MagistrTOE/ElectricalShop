@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MyElectricalShop.Domain.Interfaces;
+using Core.Exceptions;
 
 namespace MyElectricalShop.Application.ActionMethods.Companies.Delete
 {
@@ -25,6 +26,9 @@ namespace MyElectricalShop.Application.ActionMethods.Companies.Delete
         public async Task<Unit> Handle(DeleteCompanyRequest request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository.GetById(request.Id);
+            if (company == null)
+                throw new ArgumentNotFoundException($"Сущность с заданным Id: {request.Id} не найдена.");
+
             await _companyRepository.Delete(company);
 
             return Unit.Value;

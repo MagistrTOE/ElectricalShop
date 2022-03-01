@@ -1,4 +1,7 @@
 using AutoMapper;
+using Core.Extension;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyModel;
@@ -13,6 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 var host = builder.Host
+    .ConfigureLogging(logging =>
+    {
+        logging.ClearProviders();
+        logging.AddConsole();
+    })
     .ConfigureHostConfiguration(config =>
     {
         config.SetBasePath(Directory.GetCurrentDirectory())
@@ -27,6 +35,7 @@ builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IVoltageLevelRepository, VoltageLevelRepository>();
+//builder.Services.AddTransient<IValidator<CreateCompanyRequest>, CreateCompanyValidator>();
 
 
 
@@ -39,23 +48,16 @@ builder.Services.AddMediatR(assemblies);
 
 
 
+var mapper = new Mapper(new MapperConfiguration(ctx => ctx.AddMaps(assemblies)));
 
-var mapper = new Mapper(new MapperConfiguration(ctx =>
-{
-    var assemblies = DependencyContext.Default.RuntimeLibraries
-        .SelectMany(assembly => assembly.GetDefaultAssemblyNames(DependencyContext.Default)
-            .Where(assemblyName => assemblyName.FullName.StartsWith(nameof(MyElectricalShop)))
-            .Select(Assembly.Load))
-        .ToArray();
-
-    ctx.AddMaps(assemblies);
-}));
 
 builder.Services.AddSingleton<IMapper>(mapper);
 
-
+builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblies(assemblies));
 
 builder.Services.AddControllers();
+
+
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -78,6 +80,8 @@ if (builder.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyElectricalShop v1"));
 }
+
+app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

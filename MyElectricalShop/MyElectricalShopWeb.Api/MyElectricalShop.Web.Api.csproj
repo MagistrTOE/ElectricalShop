@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -18,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlackCase\Core\Core.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Application\MyElectricalShop.Application.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Infrastructure\MyElectricalShop.Infrastructure.csproj" />

@@ -3,6 +3,7 @@ using MediatR;
 using MyElectricalShop.Application.ActionMethods.Products.GetProductList;
 using MyElectricalShop.Domain.Interfaces;
 using MyElectricalShop.Domain.Models;
+using Core.Exceptions;
 
 namespace MyElectricalShop.Application.ActionMethods.Products.GetProductById
 {
@@ -36,6 +37,8 @@ namespace MyElectricalShop.Application.ActionMethods.Products.GetProductById
                 nameof(VoltageLevel)
             };
             var productById = await _productRepository.GetById(request.Id, arrayProperties);
+            if (productById == null)
+                throw new ArgumentNotFoundException($"Сущность с заданным Id: {request.Id} не найдена.");
 
             return _mapper.Map<ProductResponse>(productById);
         }
