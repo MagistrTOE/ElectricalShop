@@ -38,7 +38,7 @@ namespace MyElectricalShop.Application.ActionMethods.Products.GetProductById
             };
             var productById = await _productRepository.GetById(request.Id, arrayProperties);
             if (productById == null)
-                throw new ArgumentNotFoundException($"Сущность с заданным Id: {request.Id} не найдена.");
+                throw new ArgumentNotFoundException($"Продукт с заданным Id: {request.Id} не найден.");
 
             return _mapper.Map<ProductResponse>(productById);
         }

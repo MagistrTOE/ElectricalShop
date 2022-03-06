@@ -11,6 +11,7 @@ using MyElectricalShop.Infrastructure.Data;
 using MyElectricalShop.Infrastructure.Data.Repositories;
 using MyElectricalShop.Infrastructure.Repositories;
 using System.Reflection;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IVoltageLevelRepository, VoltageLevelRepository>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
 //builder.Services.AddTransient<IValidator<CreateCompanyRequest>, CreateCompanyValidator>();
 
 
@@ -64,6 +66,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1" });
 });
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console()
+    .WriteTo.Seq("http://localhost:5341"));
 
 var app = builder.Build();
 

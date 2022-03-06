@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ActionMethods\Cart\**" />
     <Compile Remove="ActionMethods\Order\**" />
-    <EmbeddedResource Remove="ActionMethods\Cart\**" />
     <EmbeddedResource Remove="ActionMethods\Order\**" />
-    <None Remove="ActionMethods\Cart\**" />
     <None Remove="ActionMethods\Order\**" />
   </ItemGroup>
 
