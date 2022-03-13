@@ -16,6 +16,7 @@ namespace MyElectricalShop.Infrastructure.Data.Repositories
             return await _entitySet
                 .Where(x => x.UserId == userId)
                 .Include(x => x.CartLines)
+                .ThenInclude(x => x.Product)
                 .SingleOrDefaultAsync();
         }
     }

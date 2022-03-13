@@ -4,6 +4,7 @@ using MyElectricalShop.Application.ActionMethods.Carts.Create;
 using MyElectricalShop.Application.ActionMethods.Carts.UpdateCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.AddCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.Clear;
+using MyElectricalShop.Application.ActionMethods.Carts.GetPrice;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
@@ -42,6 +43,12 @@ namespace MyElectricalShop.Web.Api.Controllers
             await _mediator.Send(new ClearCartRequest(id));
 
             return NoContent();
+        }
+
+        [HttpGet("price/{userId:Guid}")]
+        public async Task<GetPriceResponse> GetAllPriceByUserId (Guid userId)
+        {
+            return await _mediator.Send(new GetPriceRequest(userId));
         }
     }
 }

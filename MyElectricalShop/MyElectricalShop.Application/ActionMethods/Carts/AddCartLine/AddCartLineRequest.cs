@@ -28,13 +28,15 @@ namespace MyElectricalShop.Application.ActionMethods.Carts.AddCartLine
         {
             var item = _mapper.Map<CartLine>(request);
             var cart = await _cartRepository.GetByUserId(request.UserId);
-            //var existLine = cart.CartLines.FirstOrDefault(x => x.ProductId == request.ProductId);
-            //if (existLine != null)
-            //    throw new ArgumentNotFoundException($"В корзине продукт с Id: {request.ProductId}, уже существует.");
-
-            cart.CartLines.Add(item);
-
-            await _cartRepository.Update(cart);
+            try
+            {
+                cart.CartLines.Add(item);
+                await _cartRepository.Update(cart);
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseException($"Продукт в корзине с Id: {request.ProductId}, уже существует.");
+            }
 
             return Unit.Value;
         }
