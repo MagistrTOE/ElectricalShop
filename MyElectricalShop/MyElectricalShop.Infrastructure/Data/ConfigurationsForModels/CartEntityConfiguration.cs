@@ -4,12 +4,12 @@ using MyElectricalShop.Domain.Models;
 
 namespace MyElectricalShop.Infrastructure.Data.ConfigurationsForModels
 {
-    public class VoltageLevelEntityConfiguration : IEntityTypeConfiguration<VoltageLevel>
+    public class CartEntityConfiguration : IEntityTypeConfiguration<Cart>
     {
-        public void Configure(EntityTypeBuilder<VoltageLevel> builder)
+        public void Configure(EntityTypeBuilder<Cart> builder)
         {
             builder
-                .ToTable("VoltageLevels");
+                .ToTable("Carts");
 
             builder
                 .HasKey(x => x.Id);

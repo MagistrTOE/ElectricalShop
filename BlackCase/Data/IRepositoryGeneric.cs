@@ -8,6 +8,7 @@ namespace Data
         Task<List<TEntity>> GetAll();
         Task Add(TEntity entity);
         Task Delete(TEntity entity);
+        Task Update (TEntity entity);
         Task<TEntity> GetById(TKey id, IEnumerable<string> property = null);
     }
 }

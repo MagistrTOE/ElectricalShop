@@ -6,7 +6,7 @@ using MyElectricalShop.Application.ActionMethods.VoltageLevels.Delete;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {   
-    [Route("voltageLevels")]
+    [Route("voltage-levels")]
     [ApiController]
     public class VoltageLevelController : Controller
     {

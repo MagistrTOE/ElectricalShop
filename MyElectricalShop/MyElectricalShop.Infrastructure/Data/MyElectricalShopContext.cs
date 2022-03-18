@@ -8,13 +8,14 @@ namespace MyElectricalShop.Infrastructure
     {
         public MyElectricalShopContext(DbContextOptions<MyElectricalShopContext> options) : base(options) { }
         
-        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CategoryEntityConfiguration());
             modelBuilder.ApplyConfiguration(new CompanyEntityConfiguration());
             modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
             modelBuilder.ApplyConfiguration(new VoltageLevelEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CartLineEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new CartEntityConfiguration());
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyElectricalShop.Infrastructure;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyElectricalShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MyElectricalShopContext))]
-    partial class MyElectricalShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220302083610_Cart")]
+    partial class Cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.ToTable("Carts", (string)null);
@@ -42,7 +41,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CartId")
+                    b.Property<Guid?>("CartId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ProductId")
@@ -55,8 +54,7 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("ProductId", "CartId")
-                        .IsUnique();
+                    b.HasIndex("ProductId");
 
                     b.ToTable("CartLines", (string)null);
                 });
@@ -168,19 +166,15 @@ namespace MyElectricalShop.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("MyElectricalShop.Domain.Models.CartLine", b =>
                 {
-                    b.HasOne("MyElectricalShop.Domain.Models.Cart", "Cart")
+                    b.HasOne("MyElectricalShop.Domain.Models.Cart", null)
                         .WithMany("CartLines")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CartId");
 
                     b.HasOne("MyElectricalShop.Domain.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

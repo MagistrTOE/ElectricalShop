@@ -27,6 +27,7 @@
     public class VoltageLevelResponseForProduct
     {
         public int Id { get; set; }
-        public string Level { get; set; }
+        public int MinLevel { get; set; }
+        public int MaxLevel { get; set; }
     }
 }

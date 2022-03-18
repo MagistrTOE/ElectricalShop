@@ -1,0 +1,32 @@
+version: '3.4'
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "MyElectricalShopDb"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    container_name: database
+
+  myelectricalshop.web.api:
+    image: myelectricalshopwebapi
+    build:
+      context: .
+      dockerfile: MyElectricalShop/MyElectricalShopWeb.Api/Dockerfile
+    environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+       - ConnectionStrings__MyElectricalShopContext=Host=host.docker.internal;Port=5432;Database=MyElectricalShopDb;User Id=postgres;Password=password;Timeout=15;
+    ports:
+      - "55555:80"
+
+
+
+

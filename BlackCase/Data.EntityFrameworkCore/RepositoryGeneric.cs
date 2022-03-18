@@ -51,5 +51,13 @@ namespace Data.EntityFrameworkCore
 
             return Save();
         }
+
+        public Task Update (TEntity entity)
+        {
+            _entitySet.Update(entity);
+
+            return Save();
+        }
+
     }
 }
