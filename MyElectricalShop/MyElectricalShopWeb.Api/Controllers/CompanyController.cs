@@ -6,7 +6,7 @@ using MyElectricalShop.Application.ActionMethods.Companies.Delete;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
-    [Route("Companies")]
+    [Route("companies")]
     [ApiController]
     public class CompanyController : Controller
     {

@@ -25,13 +25,13 @@ namespace MyElectricalShop.Web.Api.Controllers
             return await _mediator.Send(request);
         }
 
-        [HttpPost("cartLine")]
+        [HttpPost("cart-line")]
         public async Task AddLineInCart([FromBody] AddCartLineRequest request)
         {
             await _mediator.Send(request);
         }
 
-        [HttpPut("cartLine")]
+        [HttpPut("cart-line")]
         public async Task<UpdateCartLineResponse> UpdateLineInCart([FromBody] UpdateCartLineRequest request)
         {
             return await _mediator.Send(request);
@@ -45,7 +45,7 @@ namespace MyElectricalShop.Web.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet("price/{userId:Guid}")]
+        [HttpGet("{userId:Guid}/price")]
         public async Task<GetPriceResponse> GetAllPriceByUserId (Guid userId)
         {
             return await _mediator.Send(new GetPriceRequest(userId));
