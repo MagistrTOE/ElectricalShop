@@ -4,6 +4,7 @@ using MyElectricalShop.Application.ActionMethods.Products.Create;
 using MyElectricalShop.Application.ActionMethods.Products.GetProductList;
 using MyElectricalShop.Application.ActionMethods.Products.GetProductById;
 using MyElectricalShop.Application.ActionMethods.Products.Delete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyElectricalShop.Controllers;
 
@@ -19,6 +20,7 @@ public class ProductController : Controller
     }
 
     [HttpGet("list")]
+    [Authorize]
     public async Task<List<ProductResponse>> GetListProductsWithFullInfo()
     {
         return await _mediator.Send(new GetProductListRequest());

@@ -12,6 +12,8 @@ using MyElectricalShop.Infrastructure.Data.Repositories;
 using MyElectricalShop.Infrastructure.Repositories;
 using System.Reflection;
 using Serilog;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,15 +59,44 @@ builder.Services.AddSingleton<IMapper>(mapper);
 
 builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblies(assemblies));
 
-builder.Services.AddControllers();
-
-
-
-
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(options =>
 {
-    c.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1" });
+    options.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1" });
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Flows = new OpenApiOAuthFlows
+        {
+            Password = new OpenApiOAuthFlow
+            {
+                TokenUrl = new Uri("https://localhost:10001/connect/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    {"SwaggerAPI", "MyAPI"}
+                }
+            }
+        }
+    });
 });
+    
+    
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+})
+    .AddIdentityServerAuthentication(options =>
+    {
+        options.ApiName = "SwaggerAPI";
+        options.Authority = "https://localhost:10001";
+        options.RequireHttpsMetadata = false;
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
 
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
@@ -84,12 +115,14 @@ if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyElectricalShop v1"));
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyElectricalShop"));
 }
 
 app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
