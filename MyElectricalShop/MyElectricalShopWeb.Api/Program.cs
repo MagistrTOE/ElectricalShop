@@ -12,6 +12,14 @@ using MyElectricalShop.Infrastructure.Data.Repositories;
 using MyElectricalShop.Infrastructure.Repositories;
 using System.Reflection;
 using Serilog;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MyElectricalShop.Web.Api;
+using Swashbuckle.AspNetCore.Filters;
+using IdentityServer4;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +38,17 @@ var host = builder.Host
                 .AddEnvironmentVariables();
     });
 
+builder.Services.AddCors(options =>
+{
+    // задаём политику CORS, чтобы наше клиентское приложение могло отправить запрос на сервер API
+    options.AddPolicy("default", policy =>
+    {
+        policy.WithOrigins("http://localhost:10000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 
 // Add services to the container.
 builder.Services.AddInfrastructureService(builder.Configuration);
@@ -37,7 +56,6 @@ builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IVoltageLevelRepository, VoltageLevelRepository>();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
-//builder.Services.AddTransient<IValidator<CreateCompanyRequest>, CreateCompanyValidator>();
 
 
 
@@ -48,28 +66,59 @@ var assemblies = DependencyContext.Default.RuntimeLibraries
 .ToArray();
 builder.Services.AddMediatR(assemblies);
 
-
-
 var mapper = new Mapper(new MapperConfiguration(ctx => ctx.AddMaps(assemblies)));
-
 
 builder.Services.AddSingleton<IMapper>(mapper);
 
 builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblies(assemblies));
 
-builder.Services.AddControllers();
-
-
-
-
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(options =>
 {
-    c.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1" });
+    options.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1", Description = "MyElectricalShop"});
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.OAuth2,
+        In = ParameterLocation.Header,
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new Uri("http://localhost:10000/connect/authorize"),
+                TokenUrl = new Uri("http://localhost:10000/connect/token"),
+                Scopes = new Dictionary<string, string>
+                {
+                    {"MyElectricalShop", "MyElectricalShop"}
+                }
+            }
+        }
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.Authority = "http://localhost:10000";
+        options.Audience = "MyElectricalShop";
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateLifetime = true,
+            RequireExpirationTime = true,
+            ClockSkew = new TimeSpan(1, 0, 0),
+            ValidateAudience = false
+        };
+    });
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
+
 builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console()
-    .WriteTo.Seq("http://localhost:5341"));
+    .WriteTo.Console());
 
 var app = builder.Build();
 
@@ -83,13 +132,34 @@ await context.Database.MigrateAsync(CancellationToken.None);
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyElectricalShop v1"));
 }
 
 app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
+
+
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("v1/swagger.json", "MyElectricalShop");
+    options.OAuthClientId("swagger_shop");
+    options.OAuthClientSecret("secret_swagger_shop");
+    options.OAuthAppName("MyElectricalShop");
+    options.OAuthUsePkce();
+});
+app.UseRouting();
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Lax
+});
+
+app.UseStaticFiles();
+
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

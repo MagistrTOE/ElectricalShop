@@ -2,17 +2,17 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MyElectricalShop.Infrastructure.Data
+
+namespace MyElectricalShop.Identity.Infrastructure.Data
 {
     public static class IServiceCollectionExtensionForProgram
     {
         public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<MyElectricalShopContext>(opt => opt
-                    .UseNpgsql(configuration.GetConnectionString("MyElectricalShopContext")));
-
+            services.AddDbContext<IdentityContext>(opt => opt
+                    .UseNpgsql(configuration.GetConnectionString("IdentityContext")));
+            
             return services;
-
         }
     }
 }

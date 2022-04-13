@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Core.Exceptions;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Core.Middleware
 {
@@ -21,30 +22,35 @@ namespace Core.Middleware
             {
                 await _requestDelegate(context);
             }
+            
+            catch (IdentityException ex)
+            {
+                await SendHttpResponse(ex, context, StatusCodes.Status400BadRequest, new { Errors = ex.Message });
+            }
 
             catch (ArgumentNotFoundException ex)
             {
-                await SendHttpResponse(ex, context, StatusCodes.Status404NotFound, ex.Message);
+                await SendHttpResponse(ex, context, StatusCodes.Status404NotFound, new { Errors = ex.Message });
             }
 
             catch (DatabaseException ex)
             {
-                await SendHttpResponse(ex, context, StatusCodes.Status400BadRequest, ex.Message);
+                await SendHttpResponse(ex, context, StatusCodes.Status400BadRequest, new { Errors = ex.Message });
             }
            
             catch (Exception ex)
             {
-                await SendHttpResponse(ex, context, StatusCodes.Status500InternalServerError, ex.Message);
+                await SendHttpResponse(ex, context, StatusCodes.Status500InternalServerError, new { Errors = ex.Message });
             }
         }
 
-        private async Task SendHttpResponse( Exception ex, HttpContext context, int statusCode, string message)
+        private async Task SendHttpResponse( Exception ex, HttpContext context, int statusCode, object errors)
         {
             _logger.LogError(ex, ex.Message);
             context.Response.StatusCode = statusCode;
-            context.Response.ContentType = "text/plain";
+            context.Response.ContentType = "application/json";
 
-            await context.Response.WriteAsync(message);
+            await context.Response.WriteAsync(JsonSerializer.Serialize(errors));
         }
     }
 }
