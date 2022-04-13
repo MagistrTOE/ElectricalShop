@@ -11,10 +11,8 @@ namespace MyElectricalShop.Identity.Infrastructure.Data
         {
             services.AddDbContext<IdentityContext>(opt => opt
                     .UseNpgsql(configuration.GetConnectionString("IdentityContext")));
-            services.AddRazorPages();
             
             return services;
-
         }
     }
 }

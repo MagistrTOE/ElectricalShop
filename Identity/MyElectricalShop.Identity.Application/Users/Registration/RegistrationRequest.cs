@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MyElectricalShop.Identity.Domain.Models;
+using Core.Exceptions;
 
 namespace MyElectricalShop.Identity.Application.Users.Registration
 {
@@ -26,7 +27,12 @@ namespace MyElectricalShop.Identity.Application.Users.Registration
                 UserName = request.UserName
             };
 
-            await _userManager.CreateAsync(user, request.Password);
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (!result.Succeeded)
+            {
+                throw new IdentityException(result.Errors.Select(x => x.Description).ToArray());
+            }
+
             return Unit.Value;
         }
     }

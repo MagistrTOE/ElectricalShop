@@ -1,7 +1,7 @@
-﻿using MyElectricalShop.Identity.Domain.Models;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyElectricalShop.Identity.Domain.Models;
 
 namespace MyElectricalShop.Identity.Infrastructure.Data
 {

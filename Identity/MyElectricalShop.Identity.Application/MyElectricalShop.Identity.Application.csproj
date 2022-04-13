@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlackCase\Core\Core.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Identity.Domain\MyElectricalShop.Identity.Domain.csproj" />
+    <ProjectReference Include="..\MyElectricalShop.Identity.Infrastructure\MyElectricalShop.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
