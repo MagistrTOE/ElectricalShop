@@ -3,10 +3,13 @@ using MediatR;
 using MyElectricalShop.Application.ActionMethods.VoltageLevels.Create;
 using MyElectricalShop.Application.ActionMethods.VoltageLevels.GetVoltageLevelList;
 using MyElectricalShop.Application.ActionMethods.VoltageLevels.Delete;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {   
     [Route("voltage-levels")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class VoltageLevelController : Controller
     {
@@ -24,6 +27,7 @@ namespace MyElectricalShop.Web.Api.Controllers
         }
 
         [HttpGet("list")]
+        [AllowAnonymous]
         public async Task<List<VoltageLevelResponse>> GetListVoltageLevel()
         {
             return await _mediator.Send(new GetVoltageLevelListRequest());

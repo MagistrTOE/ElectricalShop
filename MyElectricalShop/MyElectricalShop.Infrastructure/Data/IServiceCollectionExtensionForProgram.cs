@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MyElectricalShop.Domain.Interfaces;
+using MyElectricalShop.Infrastructure.Data.Repositories;
+using MyElectricalShop.Infrastructure.Repositories;
 
 namespace MyElectricalShop.Infrastructure.Data
 {
@@ -11,8 +14,12 @@ namespace MyElectricalShop.Infrastructure.Data
             services.AddDbContext<MyElectricalShopContext>(opt => opt
                     .UseNpgsql(configuration.GetConnectionString("MyElectricalShopContext")));
 
-            return services;
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IVoltageLevelRepository, VoltageLevelRepository>();
+            services.AddTransient<ICartRepository, CartRepository>();
 
+            return services;
         }
     }
 }
