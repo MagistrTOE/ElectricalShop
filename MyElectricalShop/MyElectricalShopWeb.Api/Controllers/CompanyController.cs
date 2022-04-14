@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MyElectricalShop.Application.ActionMethods.Companies.Create;
 using MyElectricalShop.Application.ActionMethods.Companies.GetList;
 using MyElectricalShop.Application.ActionMethods.Companies.Delete;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
     [Route("companies")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class CompanyController : Controller
     {
@@ -24,6 +27,7 @@ namespace MyElectricalShop.Web.Api.Controllers
         }
 
         [HttpGet("list")]
+        [AllowAnonymous]
         public async Task<List<CompanyResponseItem>> GetListCompany()
         {
             return await _mediator.Send(new GetCompanyListRequest());

@@ -5,10 +5,13 @@ using MyElectricalShop.Application.ActionMethods.Carts.UpdateCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.AddCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.Clear;
 using MyElectricalShop.Application.ActionMethods.Carts.GetPrice;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
     [Route("carts")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class CartController : Controller
     {

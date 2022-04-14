@@ -5,10 +5,12 @@ using MyElectricalShop.Application.ActionMethods.Products.GetProductList;
 using MyElectricalShop.Application.ActionMethods.Products.GetProductById;
 using MyElectricalShop.Application.ActionMethods.Products.Delete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyElectricalShop.Controllers;
 
 [Route("products")]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 [ApiController]
 public class ProductController : Controller
 {
@@ -20,7 +22,7 @@ public class ProductController : Controller
     }
 
     [HttpGet("list")]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<List<ProductResponse>> GetListProductsWithFullInfo()
     {
         return await _mediator.Send(new GetProductListRequest());
