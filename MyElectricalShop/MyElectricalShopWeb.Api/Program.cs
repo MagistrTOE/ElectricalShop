@@ -2,11 +2,13 @@ using AutoMapper;
 using Core.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.IdentityModel.Tokens;
+using MyElectricalShop.Application.RabbitMQ;
 using MyElectricalShop.Infrastructure;
 using MyElectricalShop.Infrastructure.Data;
 using MyElectricalShop.Web.Api.ExtensionsForProgram;
@@ -67,6 +69,25 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
+
+//builder.Services.AddHostedService<RabbitMqListener>();
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer(typeof(CreateCartConsumer));
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.ConfigureEndpoints(context);
+        cfg.ReceiveEndpoint("MyQueue", x =>
+        {
+            x.ConfigureConsumers(context);
+        });
+        cfg.Host("localhost", x =>
+        {
+            x.Username("guest");
+            x.Password("guest");
+        });
+    });
+});
 
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console());

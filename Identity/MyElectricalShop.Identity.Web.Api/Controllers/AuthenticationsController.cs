@@ -55,7 +55,6 @@ namespace MyElectricalShop.Identity.Web.Api.Controllers
 
             try
             {
-
                 var result = await _mediator.Send(loginRequest);
 
                 if (!result._Success)
