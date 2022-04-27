@@ -5,13 +5,13 @@ using Core.Exceptions;
 
 namespace MyElectricalShop.Identity.Application.Users.Registration
 {
-    public class RegistrationRequest : IRequest
+    public class RegistrationRequest : IRequest<Guid>
     {
         public string UserName { get; set; }
         public string Password { get; set; }
 
     }
-    public class RegistrationHandler : IRequestHandler<RegistrationRequest>
+    public class RegistrationHandler : IRequestHandler<RegistrationRequest, Guid>
     {
         private readonly UserManager<User> _userManager;
 
@@ -20,7 +20,7 @@ namespace MyElectricalShop.Identity.Application.Users.Registration
             _userManager = userManager;
         }
 
-        public async Task<Unit> Handle(RegistrationRequest request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(RegistrationRequest request, CancellationToken cancellationToken)
         {
             var user = new User
             {
@@ -33,7 +33,7 @@ namespace MyElectricalShop.Identity.Application.Users.Registration
                 throw new IdentityException(result.Errors.Select(x => x.Description).ToArray());
             }
 
-            return Unit.Value;
+            return user.Id;
         }
     }
 }

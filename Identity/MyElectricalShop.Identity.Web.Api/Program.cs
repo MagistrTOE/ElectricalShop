@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -64,6 +65,8 @@ builder.Services.AddIdentityServer(options =>
 builder.Services.AddAuthenticationCase();
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddMassTransit(x => x.UsingRabbitMq());
 
 
 

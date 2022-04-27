@@ -33,7 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyElectricalShop.Identity.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyElectricalShop.Identity.Application", "Identity\MyElectricalShop.Identity.Application\MyElectricalShop.Identity.Application.csproj", "{37D761F3-D5AB-44E0-A7BF-CB675E43A569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyElectricalShop.Identity.Web.Api", "Identity\MyElectricalShop.Identity.Web.Api\MyElectricalShop.Identity.Web.Api.csproj", "{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyElectricalShop.Identity.Web.Api", "Identity\MyElectricalShop.Identity.Web.Api\MyElectricalShop.Identity.Web.Api.csproj", "{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FCE00EA9-EA34-46EC-A1FE-F197DF9FD18D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyElectricalShop.Shared.ExternalEvents", "Shared\MyElectricalShop.Shared\MyElectricalShop.Shared.ExternalEvents.csproj", "{1D503A8E-5EBC-4F77-8068-218F83E21DC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +97,10 @@ Global
 		{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D503A8E-5EBC-4F77-8068-218F83E21DC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D503A8E-5EBC-4F77-8068-218F83E21DC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D503A8E-5EBC-4F77-8068-218F83E21DC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D503A8E-5EBC-4F77-8068-218F83E21DC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +118,7 @@ Global
 		{565A7E75-2A38-4F28-87F5-7C0917CBF2BE} = {1280BADF-4D4B-4F1D-A15C-F840D3CC61AC}
 		{37D761F3-D5AB-44E0-A7BF-CB675E43A569} = {1280BADF-4D4B-4F1D-A15C-F840D3CC61AC}
 		{0E7119C1-9F1C-4E3D-9B3C-E94E538444FA} = {1280BADF-4D4B-4F1D-A15C-F840D3CC61AC}
+		{1D503A8E-5EBC-4F77-8068-218F83E21DC4} = {FCE00EA9-EA34-46EC-A1FE-F197DF9FD18D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DD73921-E702-42A2-8973-CC1529D56BF1}

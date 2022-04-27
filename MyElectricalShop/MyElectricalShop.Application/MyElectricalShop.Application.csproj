@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\MyElectricalShop.Shared\MyElectricalShop.Shared.ExternalEvents.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Domain\MyElectricalShop.Domain.csproj" />
     <ProjectReference Include="..\MyElectricalShop.Infrastructure\MyElectricalShop.Infrastructure.csproj" />
   </ItemGroup>
@@ -20,7 +21,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
   </ItemGroup>
 
 </Project>
