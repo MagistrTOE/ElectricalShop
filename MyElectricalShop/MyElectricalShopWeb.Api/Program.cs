@@ -70,7 +70,6 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
-//builder.Services.AddHostedService<RabbitMqListener>();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer(typeof(CreateCartConsumer));
