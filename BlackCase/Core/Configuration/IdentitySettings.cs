@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Configuration
 {
-    public class Settings
+    public class IdentitySettings
     {
+        public string Authority { get; set; }
+        public string Audience { get; set; }
     }
 }
