@@ -94,5 +94,40 @@ namespace MyElectricalShop.Identity.Web.Api
                     }
                 },
             };
+
+
+        public static IEnumerable<ApiScope> GetApiScopes(IConfiguration configuration)
+        {
+             var apiScopes = configuration.GetSection("IdentityOptions").Get<IdentityOptions>().ApiScopes.ToArray();
+
+            return  apiScopes.Select(x => new ApiScope
+            {
+                Name = x.Name,
+                DisplayName = x.DisplayName,
+                Enabled = true,
+                ShowInDiscoveryDocument = true
+            });
+            /*new List<ApiScope>
+            {
+                new ApiScope
+                {
+                    Name = "identity_api",
+                    DisplayName = "Identity API scope",
+                    Enabled = true,
+                    ShowInDiscoveryDocument = true
+                },
+                new ApiScope
+                {
+                    Name = "MyElectricalShop",
+                    DisplayName = "MyElectricalShop API scope",
+                    Description = null,
+                    Required = true,
+                    Emphasize = false,
+                    Enabled = true,
+                    ShowInDiscoveryDocument = true
+                }
+            };*/
+        }
+            
     }
 }
