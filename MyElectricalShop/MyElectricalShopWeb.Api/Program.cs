@@ -5,10 +5,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyModel;
-using Microsoft.IdentityModel.Tokens;
 using MyElectricalShop.Application.RabbitMQ;
 using MyElectricalShop.Infrastructure;
 using MyElectricalShop.Infrastructure.Data;
@@ -49,24 +47,9 @@ builder.Services.AddFluentValidation(x => x.RegisterValidatorsFromAssemblies(ass
 var mapper = new Mapper(new MapperConfiguration(ctx => ctx.AddMaps(assemblies)));
 builder.Services.AddSingleton<IMapper>(mapper);
 
-builder.Services.AddSwaggerCase();
+builder.Services.AddSwaggerCase(builder.Configuration);
 
 builder.Services.AddAthenticationService(builder.Configuration.GetSection("Identity").Get<IdentitySettings>());
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-//    {
-//        options.Authority = "http://localhost:10000";
-//        options.Audience = "MyElectricalShop";
-//        options.RequireHttpsMetadata = false;
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateLifetime = true,
-//            RequireExpirationTime = true,
-//            ClockSkew = new TimeSpan(1, 0, 0),
-//            ValidateAudience = false
-//        };
-//    });
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();

@@ -1,6 +1,4 @@
-﻿using IdentityServer4;
-using IdentityServer4.Models;
-using System.Linq;
+﻿using IdentityServer4.Models;
 
 namespace MyElectricalShop.Identity.Web.Api
 {
@@ -39,13 +37,15 @@ namespace MyElectricalShop.Identity.Web.Api
         public static IEnumerable<Client> GetClients(IConfiguration configuration)
         {
             var client = configuration.GetSection("IdentityOptions").Get<IdentityOptions>().Clients.ToArray();
-            var secret = configuration.GetSection("IdentityOptions").Get<IdentityOptions>().Secrets.ToArray();
 
             return client.Select(x => new Client
             {
                 ClientId = x.ClientId,
                 RequireClientSecret = true,
-                ClientSecrets = ,
+                ClientSecrets = new List<Secret>
+                {
+                    new Secret(x.ClientSecret.Sha256())
+                },
                 AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
                 ProtocolType = "oidc",
                 AllowAccessTokensViaBrowser = false,
@@ -55,61 +55,5 @@ namespace MyElectricalShop.Identity.Web.Api
                 AllowedCorsOrigins = x.AllowedCorsOrigins
             });
         }
-
-            //public static IEnumerable<Client> Clients() =>
-            //new List<Client>
-            //{
-            //    new Client
-            //    {
-            //        ClientId = "swagger",
-            //        RequireClientSecret = true,
-            //        ClientSecrets = new List<Secret>
-            //        {
-            //            new Secret("secret_swagger".Sha256())
-            //        },
-            //        AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-            //        ProtocolType = "oidc",
-            //        AllowAccessTokensViaBrowser = false,
-            //        RedirectUris = 
-            //        {"http://localhost:10000/swagger/oauth2-redirect.html"},
-            //        PostLogoutRedirectUris = {"http://localhost:5000/swagger/"},
-            //        AllowedScopes =
-            //        {
-            //            "identity_api",
-            //            IdentityServerConstants.StandardScopes.OpenId,
-            //            IdentityServerConstants.StandardScopes.Profile,
-            //        },
-            //        AllowedCorsOrigins =
-            //        {
-            //            "http://localhost:10000",
-            //        }
-            //    },
-            //    new Client
-            //    {
-            //        ClientId = "swagger_shop",
-            //        RequireClientSecret = true,
-            //        ClientSecrets = new List<Secret>
-            //        {
-            //            new Secret("secret_swagger_shop".Sha256())
-            //        },
-            //        AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
-            //        ProtocolType = "oidc",
-            //        AllowAccessTokensViaBrowser = false,
-            //        RedirectUris = {"https://localhost:5001/swagger/oauth2-redirect.html"},
-            //        PostLogoutRedirectUris = {"https://localhost:5001/swagger/"},
-            //        AllowedScopes =
-            //        {
-            //            "MyElectricalShop",
-            //            IdentityServerConstants.StandardScopes.OpenId,
-            //            IdentityServerConstants.StandardScopes.Profile,
-            //        },
-            //        AllowedCorsOrigins =
-            //        {
-            //            "https://localhost:5001"
-            //        }
-            //    },
-            //};
-
-            
     }
 }
