@@ -40,7 +40,7 @@ builder.Services.AddScoped<IUserStore<User>, UserStore<User, IdentityRole<Guid>,
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddSwaggerCase();
+builder.Services.AddSwaggerCase(builder.Configuration);
 
 builder.Services.AddIdentityCore<User>()
     .AddEntityFrameworkStores<IdentityContext>()
@@ -58,11 +58,11 @@ builder.Services.AddIdentityServer(options =>
     .AddAspNetIdentity<User>()
     .AddInMemoryIdentityResources(IdentityConfig.IdentityResources())
     .AddInMemoryApiResources(IdentityConfig.ApiResources())
-    .AddInMemoryApiScopes(IdentityConfig.ApiScopes())
-    .AddInMemoryClients(IdentityConfig.Clients())
+    .AddInMemoryApiScopes(IdentityConfig.GetApiScopes(builder.Configuration))
+    .AddInMemoryClients(IdentityConfig.GetClients(builder.Configuration))
     .AddDeveloperSigningCredential();
 
-builder.Services.AddAuthenticationCase();
+builder.Services.AddAuthenticationCase(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
