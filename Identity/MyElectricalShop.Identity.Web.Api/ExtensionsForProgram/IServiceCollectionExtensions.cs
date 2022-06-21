@@ -24,12 +24,8 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
             return services.AddMediatR(assemblies);
         }
 
-        public static IServiceCollection AddSwaggerCase(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSwaggerCase(this IServiceCollection services)
         {
-            var authorizationUrl = configuration.GetValue<string>("Swagger:AuthorizationUrl");
-            var tokenUrl = configuration.GetValue<string>("Swagger:TokenUrl");
-            var audience = configuration.GetValue<string>("IdentityServer4:Audience");
-
             return services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -46,12 +42,12 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri(authorizationUrl),
-                            TokenUrl = new Uri(tokenUrl),
+                            AuthorizationUrl = new Uri("http://localhost:10000/connect/authorize"),
+                            TokenUrl = new Uri("http://localhost:10000/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 {"openid", "openid"},
-                                {audience, audience}
+                                {"identity_api", "identity_api"}
                             }
                         }
                     }
@@ -60,10 +56,8 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
             });
         }
 
-        public static AuthenticationBuilder AddAuthenticationCase(this IServiceCollection services, IConfiguration configuration)
+        public static AuthenticationBuilder AddAuthenticationCase(this IServiceCollection services)
         {
-            var authorityUrl = configuration.GetValue<string>("IdentityServer4:AuthorityUrl");
-
             return services.AddAuthentication(IdentityServerConstants.DefaultCookieAuthenticationScheme)
                 .AddOpenIdConnect(options =>
                 {
@@ -73,7 +67,7 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
                     options.ClientId = "shop_identity";
                     options.ClientSecret = "shop_secret";
                     options.RequireHttpsMetadata = false;
-                    options.Authority = authorityUrl;
+                    options.Authority = "http://localhost:10000";
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         RoleClaimType = ClaimTypes.Role
@@ -81,14 +75,14 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
                 })
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
-                    options.Authority = authorityUrl;
-                    options.Audience = configuration.GetValue<string>("IdentityServer4:Audience");
+                    options.Authority = "http://localhost:10000";
+                    options.Audience = "identity_api";
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateLifetime = true,
                         RequireExpirationTime = true,
-                        ClockSkew = configuration.GetValue<TimeSpan>("IdentityServer4:TokenLifeTime"),
+                        ClockSkew = new TimeSpan(1, 0, 0),
                         ValidateAudience = false
                     };
                 });

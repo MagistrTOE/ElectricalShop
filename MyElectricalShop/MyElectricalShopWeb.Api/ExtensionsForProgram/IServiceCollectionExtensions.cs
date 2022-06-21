@@ -5,12 +5,8 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
 {
     public static class IServiceCollectionExtensions
     {
-        public static IServiceCollection AddSwaggerCase(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSwaggerCase(this IServiceCollection services)
         {
-            var authorizationUrl = configuration.GetValue<string>("Swagger:AuthorizationUrl");
-            var tokenUrl = configuration.GetValue<string>("Swagger:TokenUrl");
-            var audience = configuration.GetValue<string>("Swagger:Audience");
-
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new() { Title = "MyElectricalShop", Version = "v1", Description = "MyElectricalShop" });
@@ -22,11 +18,11 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri(authorizationUrl),
-                            TokenUrl = new Uri(tokenUrl),
+                            AuthorizationUrl = new Uri("http://localhost:10000/connect/authorize"),
+                            TokenUrl = new Uri("http://localhost:10000/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {audience, audience}
+                                {"MyElectricalShop", "MyElectricalShop"}
                             }
                         }
                     }
