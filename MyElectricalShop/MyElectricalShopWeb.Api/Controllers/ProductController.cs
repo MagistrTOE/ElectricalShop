@@ -22,7 +22,7 @@ public class ProductController : Controller
     }
 
     [HttpGet("list")]
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public async Task<List<ProductResponse>> GetListProductsWithFullInfo()
     {
         return await _mediator.Send(new GetProductListRequest());

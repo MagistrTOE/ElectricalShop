@@ -1,4 +1,7 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Core.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace MyElectricalShop.Web.Api.ExtensionsForProgram
@@ -7,9 +10,7 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
     {
         public static IServiceCollection AddSwaggerCase(this IServiceCollection services, IConfiguration configuration)
         {
-            var authorizationUrl = configuration.GetValue<string>("Swagger:AuthorizationUrl");
-            var tokenUrl = configuration.GetValue<string>("Swagger:TokenUrl");
-            var audience = configuration.GetValue<string>("Swagger:Audience");
+            var swaggerSettings = configuration.GetSection("Swagger").Get<SwaggerSettings>();
 
             services.AddSwaggerGen(options =>
             {
@@ -22,11 +23,11 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri(authorizationUrl),
-                            TokenUrl = new Uri(tokenUrl),
+                            AuthorizationUrl = new Uri(swaggerSettings.AuthorizationUrl),
+                            TokenUrl = new Uri(swaggerSettings.TokenUrl),
                             Scopes = new Dictionary<string, string>
                             {
-                                {audience, audience}
+                                {swaggerSettings.Audience, swaggerSettings.Audience}
                             }
                         }
                     }
@@ -34,6 +35,27 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddAuthenticationCase(this IServiceCollection services, IConfiguration configuration)
+        {
+            var settings = configuration.GetSection("IdentityServer4").Get<IdentitySettings>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.Authority = settings.AuthorityUrl;
+                    options.Audience = settings.Audience;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateLifetime = true,
+                        RequireExpirationTime = true,
+                        ClockSkew = settings.TokenLifeTime,
+                        ValidateAudience = false
+                    };
+                });
             return services;
         }
     }
