@@ -1,5 +1,5 @@
-﻿using MyElectricalShop.Domain.Models;
-using Data;
+﻿using Data;
+using MyElectricalShop.Domain.Models;
 
 namespace MyElectricalShop.Domain.Interfaces
 {

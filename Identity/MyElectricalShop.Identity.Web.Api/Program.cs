@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MyElectricalShop.Identity.Domain.Models;
 using MyElectricalShop.Identity.Infrastructure.Data;
 using MyElectricalShop.Identity.Web.Api;
@@ -62,18 +63,28 @@ builder.Services.AddIdentityServer(options =>
     .AddInMemoryClients(IdentityConfig.GetClients(builder.Configuration))
     .AddDeveloperSigningCredential();
 
-builder.Services.AddAuthenticationCase(builder.Configuration);
+builder.Services.AddAuthenticationCase(builder.Configuration, builder.Environment);
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddMassTransit(x => x.UsingRabbitMq());
 
-
-
 var app = builder.Build();
+
+app.UsePathBase("/identity");
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsTestEnvironment())
 {
+    app.UseSwagger(options => options.PreSerializeFilters.Add((doc, request) =>
+    {
+        doc.Servers = new List<OpenApiServer>()
+        {
+            new OpenApiServer()
+            {
+                Url = $"{request.Scheme}://{request.Host.Value}/identity"
+            }
+        };
+    }));
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {

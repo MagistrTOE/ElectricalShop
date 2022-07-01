@@ -1,5 +1,5 @@
+using System.Reflection;
 using AutoMapper;
-using Core.Configuration;
 using Core.Extension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -12,7 +12,6 @@ using MyElectricalShop.Infrastructure;
 using MyElectricalShop.Infrastructure.Data;
 using MyElectricalShop.Web.Api.ExtensionsForProgram;
 using Serilog;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,12 +48,15 @@ builder.Services.AddSingleton<IMapper>(mapper);
 
 builder.Services.AddSwaggerCase(builder.Configuration);
 
-builder.Services.AddAthenticationService(builder.Configuration.GetSection("Identity").Get<IdentitySettings>());
+builder.Services.AddAuthenticationCase(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.UseCentralRoutePrefix("shop");
+});
 
 builder.Services.AddMassTransit(x =>
 {
@@ -76,7 +78,6 @@ builder.Services.AddMassTransit(x =>
 
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console());
-
 
 var app = builder.Build();
 

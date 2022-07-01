@@ -3,7 +3,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
@@ -15,6 +14,7 @@ COPY ["BlackCase/Data/Data.csproj", "BlackCase/Data/"]
 COPY ["BlackCase/Data.Entities/Data.Entities.csproj", "BlackCase/Data.Entities/"]
 COPY ["BlackCase/Core/Core.csproj", "BlackCase/Core/"]
 COPY ["MyElectricalShop/MyElectricalShop.Domain/MyElectricalShop.Domain.csproj", "MyElectricalShop/MyElectricalShop.Domain/"]
+COPY ["Shared/MyElectricalShop.Shared/MyElectricalShop.Shared.ExternalEvents.csproj", "Shared/MyElectricalShop.Shared/"]
 RUN dotnet restore "MyElectricalShop/MyElectricalShopWeb.Api/MyElectricalShop.Web.Api.csproj"
 COPY . .
 WORKDIR "/src/MyElectricalShop/MyElectricalShopWeb.Api"
