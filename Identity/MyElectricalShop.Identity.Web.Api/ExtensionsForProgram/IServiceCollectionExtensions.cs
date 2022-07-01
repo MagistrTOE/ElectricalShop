@@ -1,4 +1,6 @@
-﻿using Core.Configuration;
+﻿using System.Reflection;
+using System.Security.Claims;
+using Core.Configuration;
 using IdentityServer4;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
@@ -7,8 +9,6 @@ using Microsoft.Extensions.DependencyModel;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
-using System.Reflection;
-using System.Security.Claims;
 
 namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
 {
@@ -59,7 +59,19 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
             });
         }
 
-        public static AuthenticationBuilder AddAuthenticationCase(this IServiceCollection services, IConfiguration configuration)
+        private static readonly string[] TestEnvironmentNames = { "QA", "Development", "Docker" };
+
+        public static bool IsTestEnvironment(this IHostEnvironment hostEnvironment)
+        {
+            if (hostEnvironment == null)
+            {
+                throw new ArgumentNullException(nameof(hostEnvironment));
+            }
+
+            return TestEnvironmentNames.Contains(hostEnvironment.EnvironmentName);
+        }
+
+        public static AuthenticationBuilder AddAuthenticationCase(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             var identitySettings = configuration.GetSection("IdentityServer4").Get<IdentitySettings>();
 
@@ -71,7 +83,7 @@ namespace MyElectricalShop.Identity.Web.Api.ExtensionsForProgram
                     options.SaveTokens = true;
                     options.ClientId = "shop_identity";
                     options.ClientSecret = "shop_secret";
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = environment.IsProduction();
                     options.Authority = identitySettings.AuthorityUrl;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {

@@ -1,7 +1,7 @@
-﻿using MediatR;
+﻿using Core.Exceptions;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MyElectricalShop.Identity.Domain.Models;
-using Core.Exceptions;
 
 namespace MyElectricalShop.Identity.Application.Users.Registration
 {

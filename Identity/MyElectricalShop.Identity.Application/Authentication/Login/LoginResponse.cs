@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyElectricalShop.Identity.Application.Authentication.Login
+﻿namespace MyElectricalShop.Identity.Application.Authentication.Login
 {
     public class LoginResponse
     {
@@ -17,7 +11,7 @@ namespace MyElectricalShop.Identity.Application.Authentication.Login
             return new LoginResponse { _Success = true };
         }
 
-        public static LoginResponse Error (string message)
+        public static LoginResponse Error(string message)
         {
             return new LoginResponse { _Error = message };
         }

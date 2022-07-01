@@ -1,12 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyElectricalShop.Application.ActionMethods.Carts.Create;
-using MyElectricalShop.Application.ActionMethods.Carts.UpdateCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.AddCartLine;
 using MyElectricalShop.Application.ActionMethods.Carts.Clear;
+using MyElectricalShop.Application.ActionMethods.Carts.Create;
 using MyElectricalShop.Application.ActionMethods.Carts.GetPrice;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MyElectricalShop.Application.ActionMethods.Carts.UpdateCartLine;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
@@ -49,7 +49,7 @@ namespace MyElectricalShop.Web.Api.Controllers
         }
 
         [HttpGet("{userId:Guid}/price")]
-        public async Task<GetPriceResponse> GetAllPriceByUserId (Guid userId)
+        public async Task<GetPriceResponse> GetAllPriceByUserId(Guid userId)
         {
             return await _mediator.Send(new GetPriceRequest(userId));
         }

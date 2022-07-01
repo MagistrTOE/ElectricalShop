@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyElectricalShop.Identity.W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FCE00EA9-EA34-46EC-A1FE-F197DF9FD18D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyElectricalShop.Shared.ExternalEvents", "Shared\MyElectricalShop.Shared\MyElectricalShop.Shared.ExternalEvents.csproj", "{1D503A8E-5EBC-4F77-8068-218F83E21DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyElectricalShop.Shared.ExternalEvents", "Shared\MyElectricalShop.Shared\MyElectricalShop.Shared.ExternalEvents.csproj", "{1D503A8E-5EBC-4F77-8068-218F83E21DC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

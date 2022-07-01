@@ -1,10 +1,10 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyElectricalShop.Application.ActionMethods.Companies.Create;
-using MyElectricalShop.Application.ActionMethods.Companies.GetList;
 using MyElectricalShop.Application.ActionMethods.Companies.Delete;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MyElectricalShop.Application.ActionMethods.Companies.GetList;
 
 namespace MyElectricalShop.Web.Api.Controllers
 {
