@@ -9,7 +9,7 @@ using MyElectricalShop.Shared.ExternalEvents;
 namespace MyElectricalShop.Identity.Web.Api.Controllers
 {
     [Route("users")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class UserController : Controller
     {
