@@ -12,4 +12,9 @@
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties definitions_1json__JsonSchema="https://blockprotocol.org/schemas/block-metadata.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

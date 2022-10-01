@@ -68,7 +68,7 @@ builder.Services.AddMassTransit(x =>
         {
             x.ConfigureConsumers(context);
         });
-        cfg.Host("localhost", x =>
+        cfg.Host("rabbitmq", x =>
         {
             x.Username("guest");
             x.Password("guest");
@@ -93,7 +93,7 @@ if (builder.Environment.IsDevelopment())
 
 app.UseExceptionMiddleware();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>

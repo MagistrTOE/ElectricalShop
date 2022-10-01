@@ -30,6 +30,7 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
                             TokenUrl = new Uri(swaggerSettings.TokenUrl),
                             Scopes = new Dictionary<string, string>
                             {
+                                {"openid", "openid"},
                                 {swaggerSettings.Audience, swaggerSettings.Audience}
                             }
                         }
@@ -53,11 +54,14 @@ namespace MyElectricalShop.Web.Api.ExtensionsForProgram
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateIssuer = false,
+                        ValidIssuer = settings.ValidIssuer,
                         ValidateLifetime = true,
                         RequireExpirationTime = true,
                         ClockSkew = settings.TokenLifeTime,
                         ValidateAudience = false
                     };
+                    options.SaveToken = true;
                 });
             return services;
         }
