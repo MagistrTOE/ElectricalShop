@@ -27,10 +27,7 @@ namespace MyElectricalShop.Application.ActionMethods.Carts.GetPrice
             var cartWithProducts = await _cartRepository.GetByUserId(request.UserId);
             var price = cartWithProducts.GetAllPrice();
 
-            return new GetPriceResponse
-            {
-                AllPrice = price
-            };
+            return new GetPriceResponse { AllPrice = price };
         }
     }
 }

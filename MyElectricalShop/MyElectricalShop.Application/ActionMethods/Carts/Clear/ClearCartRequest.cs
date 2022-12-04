@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using AutoMapper;
 using MyElectricalShop.Domain.Interfaces;
 
 namespace MyElectricalShop.Application.ActionMethods.Carts.Clear
@@ -27,7 +26,7 @@ namespace MyElectricalShop.Application.ActionMethods.Carts.Clear
         {
             var cart = await _cartRepository.GetByUserId(request.UserId);
             cart.CartLines.Clear();
-           
+
             await _cartRepository.Update(cart);
 
             return Unit.Value;

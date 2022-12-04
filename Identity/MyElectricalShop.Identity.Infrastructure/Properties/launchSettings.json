@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "MyElectricalShop.Identity.Infrastructure": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61680;http://localhost:61685"
+    }
+  }
+}
